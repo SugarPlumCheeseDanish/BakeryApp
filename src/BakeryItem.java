@@ -37,7 +37,7 @@ public class BakeryItem {
         String dietFinal = dietString.substring(1, dietString.length()-1); // remove brackets
 
         return String.format("|| Name: %s%n|| Price: %.2f%n|| Expiration: %s%n"+
-                        "|| Dietary Restriction Met: %s%n|| Quantity in Stock: %d",
+                        "|| Dietary Restriction Met: %s%n|| Quantity: %d",
                         name, price, expiration, dietFinal,stock);
 
     }
