@@ -79,10 +79,8 @@ public class Main {
             else {
                 if (firstTime) {
                     System.out.println("Please enter a valid choice! (q: quit, p: peruse)");
-                    continue;
                 } else {
                     System.out.println("Please enter a valid choice! (q: quit, p: peruse, a: add)");
-                    continue;
                 }
             }
 
