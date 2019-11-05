@@ -1,3 +1,4 @@
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -37,43 +38,58 @@ public class Main {
 
         // initialize the scanner
         Scanner keyboard = new Scanner(System.in);
-
-        // initialize as true: we are "shopping"
-        boolean shopping = true;
+        String userString;
 
         // welcome the user
         System.out.println("Welcome to the Brookley's Better Bakery App!");
         System.out.println("We contain peanut, gluten, soy and dairy in our products.");
-        System.out.println("\nTo search for foods that you *can* eat, please enter the name of your dietary restriction:");
-        System.out.println("Restrictions: gluten | peanut | egg | tree nut | dairy | vegan");
-        System.out.println("To see a list of all our foods, please type \"all\".");
+        System.out.println("Would you like to peruse our products (\"p\"), or quit (\"q\")?");
+        userString = keyboard.nextLine();
+        boolean firstTime = true;
 
-        while(shopping) {
+        while(true) {
 
-            String userString = keyboard.nextLine();
+            // they wish to quit :: break immediately!
+            if (userString.equalsIgnoreCase("q") || userString.equalsIgnoreCase("quit")) { break; }
 
-            // give user the option to quit!
-            if (userString.equalsIgnoreCase("q") || userString.equalsIgnoreCase("quit")) {
-                break;
+            // they wish to peruse!
+            if (userString.equalsIgnoreCase("peruse") || userString.equalsIgnoreCase("p")) {
+                // perusing
+                System.out.println("You wish to Peruse!");
+                System.out.println("Please enter a Restriction: gluten | peanut | egg | tree nut | dairy | vegan");
+                System.out.println("To see a list of all our foods, please type \"all\". To quit type \"q\" or \"quit\".");
+                userString = keyboard.nextLine();
+                ArrayList<BakeryItem> matchingList = myBakeryDB.search(userString);
+                for (BakeryItem item : matchingList) {
+                    System.out.println(item.getDisplayText() + "\n");
+                }
             }
 
-            ArrayList<BakeryItem> matchingList = myBakeryDB.search(userString);
-            for (BakeryItem item : matchingList) {
-                System.out.println(item.getDisplayText() + "\n");
+            // they wish to add to the cart
+            else if (userString.equalsIgnoreCase("add") || userString.equalsIgnoreCase("a")) {
+
             }
 
-            System.out.println("Would you like to search for another food that you *can* eat? (y/n)");
-            userString = keyboard.nextLine();
-            if (userString.equalsIgnoreCase("n")) {
-                break;
-            }
+            // they did not enter a valid option
             else {
-                System.out.println("Enter a Restriction: gluten | peanut | egg | tree nut | dairy | vegan");
-                System.out.println("To see a list of all our foods, please type \"all\".");
+                if (firstTime) {
+                    System.out.println("Please enter a valid choice! (q: quit, p: peruse)");
+                } else {
+                    System.out.println("Please enter a valid choice! (q: quit, p: peruse, a: add)");
+                }
             }
+
+            // we ran through the loop at least once!
+            firstTime = false;
+
+            // solicit not first time input
+            System.out.println("Would you like to peruse more products (\"p\"), add an item to your cart (\"a\"), or quit (\"q\")?");
+            userString = keyboard.nextLine();
 
         } // end while
 
-    }
+        // spit out shopping cart final info and price calculation here!
 
-}
+    } // end main
+
+} // end class
