@@ -50,7 +50,7 @@ public class BakeryDB {
     //      if returns SIZE ONE LIST :: it's returning the requested item!
     // parameter: String name which must exactly match the name of an item in our DB
     // *********************************************************
-    public ArrayList<BakeryItem> add(String name) {
+    public ArrayList<BakeryItem> getSingleItem(String name) {
 
         ArrayList<BakeryItem> returnItem = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class BakeryDB {
 
                 }
                 else {
-                    returnItem.add(b);
+                    returnItem.add(b.copySelf(1));
                     b.setStock(b.getStock() - 1);
                 }
             }

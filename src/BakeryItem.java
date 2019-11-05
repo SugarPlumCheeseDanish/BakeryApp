@@ -20,8 +20,12 @@ public class BakeryItem {
     }
 
     //*****************************
-    // dietary restriction methods
+    // copy self, takes in integer saying new quantity amount
     //*****************************
+    public BakeryItem copySelf(int quantity) {
+        BakeryItem newSelf = new BakeryItem(name, price, expiration, diet, quantity);
+        return newSelf;
+    }
 
 
     //*************************

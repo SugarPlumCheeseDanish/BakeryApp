@@ -36,6 +36,7 @@ public class Main {
         // initialize the database
         BakeryDB myBakeryDB = BakeryDB.getInstance();
 
+
         // initialize the scanner
         Scanner keyboard = new Scanner(System.in);
         String userString;
@@ -93,3 +94,53 @@ public class Main {
     } // end main
 
 } // end class
+
+
+//// TESTING CODE :: USE INSIDE OF MAIN() IF NEEDED
+//
+//// show egg list real quick
+//        System.out.println("\n\nCHECKING DATABASE!");
+//                ArrayList<BakeryItem> matchingList = myBakeryDB.search("egg");
+//        for (BakeryItem item : matchingList) {
+//        System.out.println(item.getDisplayText() + "\n");
+//        }
+//
+//        // pull one honeycomb out
+//        System.out.println("\n\npull a local copy***********");
+//        ArrayList<BakeryItem> testOne = new ArrayList<>(myBakeryDB.getSingleItem("honeycomb"));
+//        for (BakeryItem item : testOne) {
+//        System.out.println(item.getDisplayText());
+//        }
+//
+//        // show egg list real quick
+//        System.out.println("\n\nCHECKING DATABASE!");
+//        matchingList = myBakeryDB.search("egg");
+//        for (BakeryItem item : matchingList) {
+//        System.out.println(item.getDisplayText() + "\n");
+//        }
+//
+//        // modify our LOCAL honeycomb
+//        System.out.println("\n\nMODIFY local copy***********");
+//        BakeryItem myItem = testOne.get(0);
+//        myItem.setStock(3);
+//        System.out.println(myItem.getDisplayText());
+//
+//        // show egg list real quick
+//        System.out.println("\n\nCHECKING DATABASE!");
+//        matchingList = myBakeryDB.search("egg");
+//        for (BakeryItem item : matchingList) {
+//        System.out.println(item.getDisplayText() + "\n");
+//        }
+//
+//        // pull another honeycomb out
+//        ArrayList<BakeryItem> testTwo = new ArrayList<>(myBakeryDB.getSingleItem("honeycomb"));
+//        for (BakeryItem item : testTwo) {
+//        System.out.println(item.getDisplayText());
+//        }
+//
+//        // show egg list real quick
+//        System.out.println("\n\nCHECKING DATABASE!");
+//        matchingList = myBakeryDB.search("egg");
+//        for (BakeryItem item : matchingList) {
+//        System.out.println(item.getDisplayText() + "\n");
+//        }
