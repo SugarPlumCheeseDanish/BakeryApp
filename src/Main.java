@@ -1,4 +1,3 @@
-import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -6,60 +5,46 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-// testing code
-//        ArrayList<String> dietAll = new ArrayList<>(Arrays.asList("gluten", "peanut",
-//                "egg", "tree nut", "dairy", "vegan"));
-//
-//        BakeryItem test = new BakeryItem("muffin",
-//                3.04,
-//                "03-04-2019",
-//                dietAll,
-//                21);
-//
-//        System.out.println(test.getDisplayText());
-//
-//        ArrayList<String> dietNone = new ArrayList<>();
-//        System.out.println(Arrays.toString(dietNone.toArray()));
-//        System.out.println("size is " + dietNone.size());
-//
-//
-//        BakeryItem another = new BakeryItem("bread pudding", 4.50, "11-6-2019",
-//                new ArrayList<>(Arrays.asList("peanut", "egg")), 11);
-//        System.out.println(another.getDisplayText());
-//
-//        BakeryDB myBakeryDB = BakeryDB.getInstance();
-//        ArrayList<BakeryItem> myList = myBakeryDB.getItemsList();
-//        for (BakeryItem item : myList) {
-//            System.out.println(item.getDisplayText() + "\n");
-//        }
 
         // initialize the database
         BakeryDB myBakeryDB = BakeryDB.getInstance();
 
-
         // initialize the scanner
         Scanner keyboard = new Scanner(System.in);
         String userString;
+
+        // initialize the shopping cart
+        ArrayList<BakeryItem> shoppingCart = new ArrayList<>();     // default = list of size zero
 
         // welcome the user
         System.out.println("Welcome to the Brookley's Better Bakery App!");
         System.out.println("We contain peanut, gluten, soy and dairy in our products.");
         System.out.println("Would you like to peruse our products (\"p\"), or quit (\"q\")?");
         userString = keyboard.nextLine();
+        System.out.println();
         boolean firstTime = true;
 
-        while(true) {
+        while (true) {
 
             // they wish to quit :: break immediately!
-            if (userString.equalsIgnoreCase("q") || userString.equalsIgnoreCase("quit")) { break; }
+            if (userString.equalsIgnoreCase("q") || userString.equalsIgnoreCase("quit")) {
+                break;
+            }
 
             // they wish to peruse!
             if (userString.equalsIgnoreCase("peruse") || userString.equalsIgnoreCase("p")) {
                 // perusing
-                System.out.println("You wish to Peruse!");
                 System.out.println("Please enter a Restriction: gluten | peanut | egg | tree nut | dairy | vegan");
                 System.out.println("To see a list of all our foods, please type \"all\". To quit type \"q\" or \"quit\".");
                 userString = keyboard.nextLine();
+                System.out.println();
+
+                // user said to quit!
+                if (userString.equalsIgnoreCase("q") || userString.equalsIgnoreCase("quit")) {
+                    break;
+                }
+
+                // user entered a dietary restriction
                 ArrayList<BakeryItem> matchingList = myBakeryDB.search(userString);
                 for (BakeryItem item : matchingList) {
                     System.out.println(item.getDisplayText() + "\n");
@@ -68,6 +53,25 @@ public class Main {
 
             // they wish to add to the cart
             else if (userString.equalsIgnoreCase("add") || userString.equalsIgnoreCase("a")) {
+                System.out.println("Please enter the NAME of the item you wish to add:");
+                userString = keyboard.nextLine();
+                System.out.println();
+
+                // get the requested item (as ArrayList)
+                ArrayList<BakeryItem> returnedItemList = myBakeryDB.getSingleItem(userString);
+
+                // no item was returned
+                if (returnedItemList.size() == 0) {
+                    System.out.println("We're sorry, we were unable to add " + userString + " to your cart.");
+                }
+                // an item was returned
+                else {
+                    shoppingCart.add(returnedItemList.get(0));
+                    System.out.println("You added " + userString + " to your cart!!!\nHere is your shopping cart so far: ");
+                    for (BakeryItem item : shoppingCart) {
+                        System.out.println(item.getDisplayText() + "\n");
+                    }
+                }
 
             }
 
@@ -75,8 +79,10 @@ public class Main {
             else {
                 if (firstTime) {
                     System.out.println("Please enter a valid choice! (q: quit, p: peruse)");
+                    continue;
                 } else {
                     System.out.println("Please enter a valid choice! (q: quit, p: peruse, a: add)");
+                    continue;
                 }
             }
 
@@ -86,10 +92,24 @@ public class Main {
             // solicit not first time input
             System.out.println("Would you like to peruse more products (\"p\"), add an item to your cart (\"a\"), or quit (\"q\")?");
             userString = keyboard.nextLine();
+            System.out.println();
 
         } // end while
 
-        // spit out shopping cart final info and price calculation here!
+        if (shoppingCart.size() != 0) {
+            // spit out shopping cart final info and price calculation here!
+            System.out.println("Here is your shopping cart so far: ");
+            for (BakeryItem item : shoppingCart) {
+                System.out.println(item.getDisplayText() + "\n");
+            }
+            double totalCost = 0;
+            for (BakeryItem item : shoppingCart) {
+                totalCost += item.getPrice();
+            }
+            System.out.printf("The total cost of your shopping cart items is: $%.2f%n%n", totalCost);
+            totalCost = totalCost * 1.07;
+            System.out.printf("With tax, this comes to a TOTAL of: $%.2f%n%n", totalCost);
+        }
 
     } // end main
 

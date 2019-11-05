@@ -44,7 +44,7 @@ public class BakeryDB {
     }
 
     // *********************************************************
-    // Database "Add" Method
+    // Database getSingleItem Method
     // returns: an ArrayList of size zero or one.
     //      if returns EMPTY LIST :: either, it was out of stock, or they typed an invalid name
     //      if returns SIZE ONE LIST :: it's returning the requested item!
@@ -57,11 +57,11 @@ public class BakeryDB {
         for (BakeryItem b : itemsList) {
             if (b.getName().equalsIgnoreCase(name)) {
                 if (b.getStock() == 0) {
-
+                    System.out.println("Sorry, this item is out of stock!");
                 }
                 else {
-                    returnItem.add(b.copySelf(1));
-                    b.setStock(b.getStock() - 1);
+                    returnItem.add(b.copySelf(1));      // return a COPY of itself!!
+                    b.setStock(b.getStock() - 1);       // decrement the stock
                 }
             }
         }
