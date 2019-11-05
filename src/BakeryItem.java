@@ -19,16 +19,24 @@ public class BakeryItem {
         this.stock = stock;
     }
 
+    //*****************************
+    // dietary restriction methods
+    //*****************************
+
+
     //*************************
     // DISPLAY method
     //*************************
     public String getDisplayText(){
+
+        String dietString = Arrays.toString(diet.toArray()); // convert via built-ins to nice String
+        String dietFinal = dietString.substring(1, dietString.length()-1); // remove brackets
+
         return String.format("|| Name: %s%n|| Price: %.2f%n|| Expiration: %s%n"+
-                        "|| Dietary Restrictions: %s%n|| Quantity in Stock: %d",
-                        name, price, expiration, Arrays.toString(diet.toArray()),stock);
+                        "|| Dietary Restriction Met: %s%n|| Quantity in Stock: %d",
+                        name, price, expiration, dietFinal,stock);
+
     }
-
-
 
     //*************************
     // auto generated getters + setters
